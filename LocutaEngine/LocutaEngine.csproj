@@ -40,8 +40,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentImporter1.cs" />
-    <Compile Include="ContentProcessor1.cs" />
+    <Compile Include="Assets\Asset.cs" />
+    <Compile Include="Assets\Effects.cs" />
+    <Compile Include="Assets\Fonts.cs" />
+    <Compile Include="Assets\Textures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
