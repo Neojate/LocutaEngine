@@ -44,6 +44,8 @@
     <Compile Include="Assets\Effects.cs" />
     <Compile Include="Assets\Fonts.cs" />
     <Compile Include="Assets\Textures.cs" />
+    <Compile Include="Graphics\Camera2D.cs" />
+    <Compile Include="Graphics\Canvas.cs" />
     <Compile Include="Inputs\Input.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
