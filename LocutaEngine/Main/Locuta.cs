@@ -44,11 +44,11 @@ namespace LocutaEngine.Main
             screenManager.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             canvas.Set();
 
-            screenManager.Draw(spriteBatch);
+            screenManager.Draw(spriteBatch, gameTime);
 
             canvas.Unset();
             canvas.Print(spriteBatch);

@@ -45,7 +45,7 @@ namespace LocutaEngine.Screens
 
         public abstract void Update(GameTime gameTime);
 
-        public abstract void Draw(SpriteBatch spriteBatch);
+        public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
         public void SetGame(Game game)
         {

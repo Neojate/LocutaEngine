@@ -53,11 +53,11 @@ namespace LocutaEngine.Screens
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             for (int i = 0; i < screens.Count; i++)
                 if (screens[i].State != ScreenState.Shutdown)
-                    screens[i].Draw(spriteBatch);
+                    screens[i].Draw(spriteBatch, gameTime);
         }
     }
 }
