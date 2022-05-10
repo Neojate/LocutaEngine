@@ -32,7 +32,7 @@ namespace LocutaEngine.Graphics
             game.GraphicsDevice.SetRenderTarget(null);
         }
 
-        public void Present(SpriteBatch spriteBatch)
+        public void Print(SpriteBatch spriteBatch)
         {
             game.GraphicsDevice.Clear(Color.Pink);
 
