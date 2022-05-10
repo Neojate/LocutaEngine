@@ -7,24 +7,20 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LocutaEngine.Main
 {
-    public class Locuta
+    public sealed class Locuta
     {
         private ScreenManager screenManager = ScreenManager.Instance;
+
+        private Input input = Input.Instance;
 
         private Textures textures = Textures.Instance;
         private Fonts fonts = Fonts.Instance;
         private Effects effects = Effects.Instance;
 
-        private Input input = Input.Instance;
-
-        private Game game;
-
         private Canvas canvas;
 
         public Locuta(Game game, int width, int height)
         {
-            this.game = game;
-
             canvas = new Canvas(game, width, height);
 
             screenManager.Game = game;
