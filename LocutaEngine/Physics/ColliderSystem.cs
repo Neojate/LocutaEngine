@@ -1,11 +1,11 @@
-﻿using LocutaEngine.Physics;
+﻿using LocutaEngine.Ecs;
 using Microsoft.Xna.Framework;
 
-namespace LocutaEngine.Ecs
+namespace LocutaEngine.Physics
 {
     public class ColliderSystem : SystemBase<Collider>
     {
-        private static NewCollision collision = new NewCollision();
+        private static Collision collision = new Collision();
 
         public new static void Update(GameTime gameTime)
         {

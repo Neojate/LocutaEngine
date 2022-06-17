@@ -1,4 +1,4 @@
-﻿using LocutaEngine.Figures;
+﻿using LocutaEngine.Ecs;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -6,74 +6,44 @@ namespace LocutaEngine.Physics
 {
     public class Collision
     {
-        public bool Collide(RigitBody bodyA, RigitBody bodyB, out Vector2 normal, out float depth)
+        public bool Collide(Collider colliderA, Collider colliderB, out Vector2 normal, out float depth)
         {
             normal = Vector2.Zero;
             depth = 0f;
 
-            if (bodyA is Circle)
-            {
-                Circle circleA = (Circle)bodyA;
-                if (bodyB is Circle)
-                {
-                    Circle circleB = (Circle)bodyB;
-                    return CircleCollision(circleA, circleB, out normal, out depth);
-                }
-                else if (bodyB is Polygon)
-                {
-                    Polygon polygonB = (Polygon)bodyB;
-                    return CirclePolygonCollision(circleA, polygonB, out normal, out depth);
-                }
-            }
-            else if (bodyA is Polygon)
-            {
-                Polygon polygonA = (Polygon)bodyA;
-                if (bodyB is Circle)
-                {
-                    Circle circleB = (Circle)bodyB;
-                    return CirclePolygonCollision(circleB, polygonA, out normal, out depth);
-                }
-                else if (bodyB is Polygon)
-                {
-                    Polygon polygonB = (Polygon)bodyB;
-                }
-            }
+            if (colliderA.BodyType == BodyType.Circle && colliderB.BodyType == BodyType.Circle)
+                return CircleCollision(colliderA, colliderB, out normal, out depth);
+
+            if (colliderA.BodyType == BodyType.Circle && colliderB.BodyType == BodyType.Polygon)
+                return CirclePolygonCollision(colliderA, colliderB, out normal, out depth);
+
+            if (colliderA.BodyType == BodyType.Polygon && colliderB.BodyType == BodyType.Circle)
+                return CirclePolygonCollision(colliderB, colliderA, out normal, out depth);
+
             return false;
         }
 
-        public void ResolveCollision(RigitBody bodyA, RigitBody bodyB, Vector2 normal, float depth)
-        {
-            Vector2 relativeVelocity = bodyB.LinearVelocity - bodyA.LinearVelocity;
-
-            float e = (float)Math.Min(bodyA.Restitution, bodyB.Restitution);
-
-            float j = -(1f + e) * Vector2.Dot(relativeVelocity, normal);
-            j /= bodyA.InvMass + bodyB.InvMass;
-
-            Vector2 impulse = j * normal;
-
-            
-            bodyA.LinearVelocity -= impulse * bodyA.InvMass;    
-            bodyB.LinearVelocity += impulse * bodyB.InvMass;
-        }
-
-        private bool CircleCollision(Circle circleA, Circle circleB, out Vector2 normal, out float depth)
+        private bool CircleCollision(Collider colliderA, Collider colliderB, out Vector2 normal, out float depth)
         {
             normal = Vector2.Zero;
             depth = 0f;
 
-            float distance = Vector2.Distance(circleA.Center, circleB.Center);
-            float totalRadius = circleA.Radius + circleB.Radius;
+            Renderer rendererA = colliderA.Entity.GetComponent<Renderer>();
+            Renderer rendererB = colliderB.Entity.GetComponent<Renderer>();
+
+            float distance = Vector2.Distance(rendererA.Center, rendererB.Center);
+            float totalRadius = rendererA.Size.X * 0.5f + rendererB.Size.X * 0.5f;
 
             if (distance > totalRadius)
                 return false;
 
-            normal = Vector2.Normalize(circleB.Center - circleA.Center);
+            normal = Vector2.Normalize(rendererB.Center - rendererA.Center);
             depth = totalRadius - distance;
+
             return true;
         }
 
-        private bool CirclePolygonCollision(Circle circle, Polygon polygon, out Vector2 normal, out float depth)
+        private bool CirclePolygonCollision(Collider circle, Collider polygon, out Vector2 normal, out float depth)
         {
             normal = Vector2.Zero;
             depth = float.MaxValue;
@@ -82,6 +52,8 @@ namespace LocutaEngine.Physics
             float axisDepth = 0f;
 
             float minA, maxA, minB, maxB;
+
+            Renderer circleRenderer = circle.Entity.GetComponent<Renderer>();
 
             Vector2[] vertices = polygon.TransformedVertices;
             for (int i = 0; i < vertices.Length; i++)
@@ -94,7 +66,7 @@ namespace LocutaEngine.Physics
                 axis = Vector2.Normalize(axis);
 
                 ProjectVertices(vertices, axis, out minA, out maxA);
-                ProjectCircle(circle.Center, circle.Radius, axis, out minB, out maxB);
+                ProjectCircle(circleRenderer.Center, circleRenderer.Size.X * 0.5f, axis, out minB, out maxB);
 
                 if (minA >= maxB || minB >= maxA)
                     return false;
@@ -115,7 +87,7 @@ namespace LocutaEngine.Physics
             axis = Vector2.Normalize(axis);
 
             ProjectVertices(vertices, axis, out minA, out maxA);
-            ProjectCircle(circle.Center, circle.Radius, axis, out minB, out maxB);
+            ProjectCircle(circleRenderer.Center, circleRenderer.Size.X * 0.5f, axis, out minB, out maxB);
 
             if (minA >= maxB || minB >= maxA)
                 return false;
@@ -134,6 +106,21 @@ namespace LocutaEngine.Physics
                 normal = -normal;
 
             return true;
+        }
+
+        public void ResolveCollision(Collider colliderA, Collider colliderB, Vector2 normal, float depth)
+        {
+            Vector2 relativeVelocity = colliderB.LinearVelocity - colliderA.LinearVelocity;
+
+            float e = (float)Math.Min(colliderA.Restitution, colliderB.Restitution);
+
+            float j = -(1f + e) * Vector2.Dot(relativeVelocity, normal);
+            j /= colliderA.InvMass + colliderB.InvMass;
+
+            Vector2 impulse = j * normal;
+
+            colliderA.LinearVelocity -= impulse * colliderA.InvMass;
+            colliderB.LinearVelocity += impulse * colliderB.InvMass;
         }
 
         private void ProjectVertices(Vector2[] vertices, Vector2 axis, out float min, out float max)
@@ -188,10 +175,7 @@ namespace LocutaEngine.Physics
                     result = i;
                 }
             }
-
             return result;
         }
-
-
     }
 }
