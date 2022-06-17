@@ -20,7 +20,7 @@ namespace LocutaEngine.Figures
 
         protected Action onCollision;
 
-        public Vector2 Center { get { return center; } }
+        public Vector2 Center { get { return center; } set { center = value; } }
 
         public Vector2 LinearVelocity { get { return linearVelocity; } set { linearVelocity = value; } }
 

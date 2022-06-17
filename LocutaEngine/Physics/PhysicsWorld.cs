@@ -59,7 +59,7 @@ namespace LocutaEngine.Physics
                             bodyA.HasCollide = true;
                             bodyB.HasCollide = true;
 
-                            collision.ResolveCollision(bodyA, bodyB, normal, depth);
+                            //collision.ResolveCollision(bodyA, bodyB, normal, depth);
 
                             OnCollision(bodyA, bodyB);
                         }
