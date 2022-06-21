@@ -21,8 +21,6 @@ namespace LocutaEngine.Screens
 
         public Game game;
 
-        protected bool hasInit = false;
-
         protected Canvas canvas;
 
         protected Input input;
@@ -38,9 +36,9 @@ namespace LocutaEngine.Screens
             textures = Textures.Instance;
         }
 
-        protected virtual void Init()
+        public virtual void Init()
         {
-            hasInit = true;
+            
         }
 
         public abstract void Update(GameTime gameTime);

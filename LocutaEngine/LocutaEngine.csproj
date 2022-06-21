@@ -48,6 +48,9 @@
     <Compile Include="Assets\Fonts.cs" />
     <Compile Include="Assets\Textures.cs" />
     <Compile Include="Ecs\Collider.cs" />
+    <Compile Include="Ecs\RefreshSystem.cs" />
+    <Compile Include="Ecs\RenderSystem.cs" />
+    <Compile Include="Physics\BodyType.cs" />
     <Compile Include="Physics\ColliderSystem.cs" />
     <Compile Include="Ecs\Component.cs" />
     <Compile Include="Ecs\Entity.cs" />

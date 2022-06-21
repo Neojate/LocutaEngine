@@ -28,6 +28,7 @@ namespace LocutaEngine.Screens
             screen.SetGame(game);
             screen.SetCanvas(canvas);
             screens.Add(screen);
+            screen.Init();
         }
 
         public void RemoveScreen(string screenName)

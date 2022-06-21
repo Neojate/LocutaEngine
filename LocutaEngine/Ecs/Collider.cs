@@ -1,5 +1,4 @@
-﻿using LocutaEngine.Figures;
-using LocutaEngine.Physics;
+﻿using LocutaEngine.Physics;
 using Microsoft.Xna.Framework;
 using System;
 

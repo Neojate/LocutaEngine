@@ -67,7 +67,7 @@ namespace LocutaEngine.Ecs
                 blendState: BlendState.AlphaBlend,
                 samplerState: SamplerState.PointClamp,
                 rasterizerState: RasterizerState.CullNone,
-                transformMatrix: camera.Transform
+                transformMatrix: camera == null ? Matrix.Identity : camera.Transform
             );
 
             spriteBatch.Draw(
