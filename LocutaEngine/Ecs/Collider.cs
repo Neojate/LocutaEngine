@@ -24,11 +24,8 @@ namespace LocutaEngine.Ecs
         //Si el elemento es estático
         private bool isStatic;
 
-        //Si el elemento ya ha colisionado
-        private bool hasCollide;
-
         //Acción al colisionar
-        private Action onCollision;
+        public Action<Collider> OnCollision { get; set; }
 
         //Vertices
         private Vector2[] vertices;
@@ -47,8 +44,6 @@ namespace LocutaEngine.Ecs
 
         public bool IsStatic { get { return isStatic; } }
 
-        public bool HasCollide { get { return hasCollide; } set { hasCollide = value; } }
-
         internal Vector2[] Vertices { get { return vertices; } }
         internal Vector2[] TransformedVertices { get { return transformedVertices; } }
 
@@ -66,13 +61,13 @@ namespace LocutaEngine.Ecs
             ColliderSystem.Register(this);
         }
 
-        public Collider(BodyType bodyType, float mass, float restitution, bool isStatic, Action onCollision)
+        public Collider(BodyType bodyType, float mass, float restitution, bool isStatic, Action<Collider> onCollision)
         {
             this.bodyType = bodyType;
             this.mass = mass;
             this.restitution = restitution;
             this.isStatic = isStatic;
-            this.onCollision = onCollision;
+            this.OnCollision = onCollision;
 
             invMass = isStatic ? 0 : 1 / mass;
 

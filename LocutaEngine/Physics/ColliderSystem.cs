@@ -34,12 +34,10 @@ namespace LocutaEngine.Physics
                             colliderB.Move(normal * depth * 0.5f);
                         }
 
-                        colliderA.HasCollide = true;
-                        colliderB.HasCollide = true;
-
                         collision.ResolveCollision(colliderA, colliderB, normal, depth);
 
-                        OnCollision(colliderA, colliderB);
+                        colliderA.OnCollision?.Invoke(colliderB);
+                        colliderB.OnCollision?.Invoke(colliderA);
                     }
 
                 }
@@ -49,7 +47,8 @@ namespace LocutaEngine.Physics
 
         protected static void OnCollision(Collider colliderA, Collider colliderB)
         {
-
+            colliderA.OnCollision?.Invoke(colliderB);
+            colliderB.OnCollision?.Invoke(colliderA);
         }
     }
 }
