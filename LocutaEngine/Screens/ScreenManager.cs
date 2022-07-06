@@ -33,12 +33,25 @@ namespace LocutaEngine.Screens
 
         public void RemoveScreen(string screenName)
         {
-            screens.Find(screen => screen.Name == screenName).State = ScreenState.Shutdown;
+            for (int i = 0; i < screens.Count; i++)
+                if (screens[i].Name == screenName)
+                    screens[i].State = ScreenState.Shutdown;
+        }
+
+        public T GetScreen<T>() where T : Screen
+        {
+            for (int i = 0; i < screens.Count; i++)
+                if (screens[i].GetType().Equals(typeof(T)))
+                    return (T)screens[i];
+            return null;
         }
 
         public T GetScreen<T>(string screenName) where T : Screen
         {
-            return (T)screens.Find(screen => screen.Name == screenName);
+            for (int i = 0; i < screens.Count; i++)
+                if (screens[i].Name == screenName)
+                    return (T)screens[i];
+            return null;
         }
 
         public void Update(GameTime gameTime)
