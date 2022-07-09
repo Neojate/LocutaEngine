@@ -28,8 +28,8 @@ namespace LocutaEngine.Physics
             normal = Vector2.Zero;
             depth = 0f;
 
-            Renderer rendererA = colliderA.Entity.GetComponent<Renderer>();
-            Renderer rendererB = colliderB.Entity.GetComponent<Renderer>();
+            Transform rendererA = colliderA.Entity.GetComponent<Transform>();
+            Transform rendererB = colliderB.Entity.GetComponent<Transform>();
 
             float distance = Vector2.Distance(rendererA.Center, rendererB.Center);
             float totalRadius = rendererA.Size.X * 0.5f + rendererB.Size.X * 0.5f;
@@ -53,7 +53,7 @@ namespace LocutaEngine.Physics
 
             float minA, maxA, minB, maxB;
 
-            Renderer circleRenderer = circle.Entity.GetComponent<Renderer>();
+            Transform circleTransform = circle.Entity.GetComponent<Transform>();
 
             Vector2[] vertices = polygon.TransformedVertices;
             for (int i = 0; i < vertices.Length; i++)
@@ -66,7 +66,7 @@ namespace LocutaEngine.Physics
                 axis = Vector2.Normalize(axis);
 
                 ProjectVertices(vertices, axis, out minA, out maxA);
-                ProjectCircle(circleRenderer.Center, circleRenderer.Size.X * 0.5f, axis, out minB, out maxB);
+                ProjectCircle(circleTransform.Center, circleTransform.Size.X * 0.5f, axis, out minB, out maxB);
 
                 if (minA >= maxB || minB >= maxA)
                     return false;
@@ -87,7 +87,7 @@ namespace LocutaEngine.Physics
             axis = Vector2.Normalize(axis);
 
             ProjectVertices(vertices, axis, out minA, out maxA);
-            ProjectCircle(circleRenderer.Center, circleRenderer.Size.X * 0.5f, axis, out minB, out maxB);
+            ProjectCircle(circleTransform.Center, circleTransform.Size.X * 0.5f, axis, out minB, out maxB);
 
             if (minA >= maxB || minB >= maxA)
                 return false;

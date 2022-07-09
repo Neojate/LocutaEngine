@@ -58,7 +58,6 @@
     <Compile Include="Ecs\Entity.cs" />
     <Compile Include="Ecs\IRenderizable.cs" />
     <Compile Include="Ecs\IRefreshable.cs" />
-    <Compile Include="Ecs\Renderer.cs" />
     <Compile Include="Ecs\SystemBase.cs" />
     <Compile Include="Graphics\Camera2D.cs" />
     <Compile Include="Graphics\Canvas.cs" />

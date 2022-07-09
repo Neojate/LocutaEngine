@@ -18,6 +18,8 @@ namespace LocutaEngine.Ecs
         //Instancia del componente transform
         private Transform transform;
 
+        public Camera2D Camera { get { return camera; } }
+
         public SpriteRenderer(Texture2D texture, Rectangle sourceRectangle, Camera2D camera)
         {
             this.texture = texture;

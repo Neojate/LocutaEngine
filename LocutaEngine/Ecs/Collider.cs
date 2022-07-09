@@ -47,8 +47,8 @@ namespace LocutaEngine.Ecs
         internal Vector2[] Vertices { get { return vertices; } }
         internal Vector2[] TransformedVertices { get { return transformedVertices; } }
 
-        public Vector2 Center { get { return entity.GetComponent<Renderer>().Center; } }
-
+        public Vector2 Center { get { return entity.GetComponent<Transform>().Center; } }
+        
         public Collider(BodyType bodyType, float mass, float restitution, bool isStatic)
         {
             this.bodyType = bodyType;
@@ -92,12 +92,12 @@ namespace LocutaEngine.Ecs
 
         public void Move(Vector2 amount)
         {
-            entity.GetComponent<Renderer>().Position += amount;
+            entity.GetComponent<Transform>().Position += amount;
         }
 
         public void MoveTo(Vector2 position)
         {
-            entity.GetComponent<Renderer>().Position = position;
+            entity.GetComponent<Transform>().Position = position;
         }
 
         internal void Step(GameTime gameTime)
@@ -122,11 +122,11 @@ namespace LocutaEngine.Ecs
 
         internal void generatePolygon()
         {
-            Renderer renderer = entity.GetComponent<Renderer>();
-            float left = -renderer.Size.X * 0.5f;
-            float right = left + renderer.Size.X;
-            float bottom = -renderer.Size.Y * 0.5f;
-            float top = bottom + renderer.Size.Y;
+            Transform transform = entity.GetComponent<Transform>();
+            float left = -transform.Size.X * 0.5f;
+            float right = left + transform.Size.X;
+            float bottom = -transform.Size.Y * 0.5f;
+            float top = bottom + transform.Size.Y;
 
             vertices = new Vector2[4]
             {
@@ -142,7 +142,7 @@ namespace LocutaEngine.Ecs
 
         internal void TransformVertices()
         {
-            Vector2 center = entity.GetComponent<Renderer>().Center;
+            Vector2 center = entity.GetComponent<Transform>().Center;
             Matrix matrix = Matrix.CreateTranslation(new Vector3(center.X, center.Y, 0));
 
             for (int i = 0; i < vertices.Length; i++)
