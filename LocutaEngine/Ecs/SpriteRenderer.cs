@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LocutaEngine.Ecs
 {
-    public class SpriteRenderer : Component
+    public class SpriteRenderer : Component, IRenderizable
     {
         //Textura de la imagen
         private Texture2D texture;
@@ -25,7 +25,10 @@ namespace LocutaEngine.Ecs
             this.texture = texture;
             this.sourceRectangle = sourceRectangle;
             this.camera = camera;
-            
+        }
+
+        public override void Init()
+        {
             transform = entity.GetComponent<Transform>();
         }
 
