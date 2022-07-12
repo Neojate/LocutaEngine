@@ -13,16 +13,11 @@ namespace LocutaEngine.Ecs
         //Rotación de la entidad
         private float rotation;
 
-        //Color shader de la entidad
-        private Color color;
-
         public Vector2 Position { get { return position; } set { position = value; } }
 
         public Vector2 Size { get { return size; } set { size = value; } }
 
         public float Rotation { get { return rotation; } set { rotation = value; } }
-
-        public Color Color { get { return color; } set { color = value; } }
 
         public Vector2 Center { get { return position + size * 0.5f; } }
 
@@ -31,15 +26,13 @@ namespace LocutaEngine.Ecs
             position = Vector2.Zero;
             size = Vector2.Zero;
             rotation = 0f;
-            color = Color.White;
         }
 
-        public Transform(Vector2 position, Vector2 size, float rotation, Color color)
+        public Transform(Vector2 position, Vector2 size, float rotation)
         {
             this.position = position;
             this.size = size;
             this.rotation = rotation;
-            this.color = color;
         }
     }
 }
